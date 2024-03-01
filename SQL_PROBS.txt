@@ -1,0 +1,92 @@
+196--Delete Duplicate Emails
+delete p1 from person p1,person p2 
+where p1.Email=P2.Email
+and p1.id>p2.id
+
+511--- Game Play Analysis I
+select player_id,min(event_date) as first_login from Activity
+group by player_id
+
+586. Customer Placing the Largest Number of Orders
+select customer_number 
+from Orders
+group by customer_number
+order by count(*) desc
+limit 1
+
+--596. Classes More Than 5 Students
+select class from Courses 
+group by class
+having count(student)>4
+
+---607. Sales Person
+SELECT s.name 
+FROM SalesPerson s 
+WHERE s.name NOT IN (
+    SELECT s.name 
+    FROM Orders o 
+    JOIN SalesPerson s ON o.sales_id = s.sales_id 
+    JOIN Company c ON o.com_id = c.com_id
+    where c.name = 'Red'
+);
+
+ (OR)
+
+SELECT s.name
+  FROM Orders o
+      JOIN Company c
+          ON o.com_id = c.com_id
+         AND c.name = 'RED'
+      RIGHT JOIN SalesPerson s
+          ON s.sales_id = o.sales_id
+ WHERE o.sales_id IS NULL;
+
+--610. Triangle Judgement
+SELECT x,y,z,
+case 
+    when x+y>z and x+z>y and y+z>x then 'Yes'
+    else 'No' 
+end as triangle
+from Triangle
+
+
+----619. Biggest Single Number
+SELECT MAX(num) AS num
+FROM (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(num) = 1
+) AS unique_numbers;
+
+
+
+-----620. Not Boring Movies
+select * from Cinema
+where id%2 <> 0 and description <> "boring"
+order by rating desc
+
+
+------627. Swap Salary
+update salary set sex =
+case sex 
+    when 'm' then 'f'
+    else 'm'
+end;
+
+
+
+----1050. Actors and Directors Who Cooperated At Least Three Times
+
+select actor_id,director_id
+from ActorDirector
+group by actor_id,director_id
+having count(*)>=3
+
+----1075. Project Employees I
+select project_id,
+round(avg(experience_years),2) as average_years
+from Project p
+join Employee e on 
+p.employee_id=e.employee_id
+group by Project_id
